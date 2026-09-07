@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Word Game</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.css" integrity="sha512-x9WwyMYBnlXMNQ6kQ/Lyzu1NqIhLQKL5Oq6xByfXuRj7s9CskyCbLv/1IjqzJmXwFXWr0ov6jBV7Qbc0hh9nHg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+</head>
+<style>
+    *{
+        margin: 0;padding: 0;
+    }
+body,html{
+    height: 100%;
+}
+
+#main{
+    height: 100%;
+    
+}
+.form{margin:  30px;
+    height: 80%;
+   
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    
+}
+.words{
+    height: 20%;
+   
+    position: relative;
+}
+
+.form input{
+    all: unset;
+    border: 1px solid black;
+    background-color: white;
+    width: 45%;
+    height: 40%;
+    font-size: 4rem;
+    align-content: center;
+    text-align: center;
+    border-radius: 4%;
+     box-shadow: 7px 4px 20px 0px gray;
+}
+.form button{
+    height: 100px;
+    width: 200px;
+     border-radius: 4%;
+     font-size: 2rem;
+     color: purple;
+     background-color: white;
+     border: 1px solid purple;
+     box-shadow: 7px 4px 20px 0px gray;
+}
+
+.words a {
+    border-radius: 50%;
+    background-color: white;
+    position: absolute;
+    color: purple;
+    
+    text-align: center;
+    align-content: center;
+    right: 40px;
+    height: 70px;
+    width: 70px;
+    font-size: 2rem;
+    transition: all .4s;
+    border: 1px solid #d8d2d2;
+    box-shadow: 7px 4px 20px 0px gray;
+}
+.words a:hover{
+    background-color: aliceblue;
+    transform: scale(1.5);
+    transform: rotate(60deg);
+    right: 50px;
+    
+}
+</style>
+<body>
+    
+    <div id="main">
+
+        
+
+        <form class="form" method="POST">
+            <input type="text" name="word">
+            <button type="submit">ENTER</button>
+        </form>
+
+        
+        
+        <div class="words">
+            <a href="/words"><i class="fa-regular fa-note-sticky"></i></a>
+        </div>
+    </div>
+    
+    
+    
+</body>
+</html>
