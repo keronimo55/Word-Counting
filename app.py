@@ -6,6 +6,10 @@ from flask import abort
 import os
 app = Flask(__name__)
 
+if(os.path.exists("words.json")==False):
+    with open("words.json","w",encoding="utf-8") as file:
+        json.dump({},file,ensure_ascii=False)
+
 @app.route("/words")
 def words():
     with open("words.json","r",encoding="utf-8") as file:
@@ -41,8 +45,8 @@ def control():
     else: 
 
         status=True
-        if(os.path.exists("words.json")):
-            with open("words.json","r",encoding="utf-8") as file:
+        if(os.path.exists("words.json")):  #re-checking
+            with open("words.json","r",encoding="utf-8") as file:  
                 data = json.load(file)
 
             if word in data:
@@ -80,7 +84,7 @@ def control():
                     alert=  "exist"
 
                     with open("words.json","w",encoding="utf-8") as file :
-                        json.dump(data,file, indent=5, ensure_ascii=False)
+                        json.dump(data,file, indent=4, ensure_ascii=False)
                     
 
                 
