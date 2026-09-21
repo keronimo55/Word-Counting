@@ -19,19 +19,23 @@ body,html{
     height: 100%;
     
 }
-.form{margin:  30px;
+.form{
     height: 80%;
-   
+    position: relative;
     flex-direction: column;
     display: flex;
     align-items: center;
     justify-content: space-around;
+   
     
 }
 .words{
     height: 20%;
-   
-    position: relative;
+    
+    display: flex;
+    justify-content: end;
+    align-items: center;
+
 }
 
 .form input{
@@ -40,66 +44,175 @@ body,html{
     background-color: white;
     width: 45%;
     height: 40%;
-    font-size: 4rem;
+    font-size: 64px;
     align-content: center;
     text-align: center;
     border-radius: 4%;
      box-shadow: 7px 4px 20px 0px gray;
+     color: purple;
 }
 .form button{
     height: 100px;
     width: 200px;
      border-radius: 4%;
-     font-size: 2rem;
+     font-size: 32px;
      color: purple;
      background-color: white;
+     transition: all .5s;
      border: 1px solid purple;
      box-shadow: 7px 4px 20px 0px gray;
+     border: 3px solid purple;
+}
+.form button:hover{
+    background-color: hsl(300, 53%, 77%);
+    
 }
 
 .words a {
     border-radius: 50%;
     background-color: white;
-    position: absolute;
-    color: purple;
     
+    color: purple;
+    position: relative;
     text-align: center;
     align-content: center;
-    right: 40px;
+    margin-right: 50px;
     height: 70px;
     width: 70px;
-    font-size: 2rem;
+    font-size: 32px;
     transition: all .4s;
     border: 1px solid #d8d2d2;
     box-shadow: 7px 4px 20px 0px gray;
 }
 .words a:hover{
     background-color: aliceblue;
-    transform: scale(1.5);
-    transform: rotate(60deg);
-    right: 50px;
+    transform: scale(1.2);
+    
     
 }
+.words .counter{
+    top: 0;
+    right: 0;
+    transform: translate(-25%,-100%);
+    position: absolute;
+    bottom: 50px;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    border-radius: 50%;
+    background-color: white;
+    color: purple;
+    border: 2px solid purple;
+    align-content: center;
+    text-align: center;
+    font-weight: bold;
+}
+#main .form span{
+    font-size:30px;
+}
+
+ 
 </style>
 <body>
     
     <div id="main">
-
+        
+        
         
 
-        <form class="form" method="POST">
+        <div class="form">
+                
+            
+            
             <input type="text" name="word">
-            <button type="submit">ENTER</button>
-        </form>
+            <span>-</span>
+            <button>ENTER</button>
+        </div>
 
         
         
         <div class="words">
-            <a href="/words"><i class="fa-regular fa-note-sticky"></i></a>
+            
+            <a href="/words">
+                <div class="counter">{{num}} </div>
+                <i class="fa-regular fa-note-sticky"></i>
+            </a>
         </div>
     </div>
     
     
+<script>
     
+    document.addEventListener("DOMContentLoaded",function(){
+       
+        let status =false;
+
+        let exp= document.querySelector(".form span");
+        let button = document.querySelector("#main .form button");
+        let num = document.querySelector(".words .counter");
+        let word=document.querySelector("input");
+        button.addEventListener("click",clickin);
+        document.addEventListener("keydown",clickin);
+
+        function clickin(event){
+                
+                if (event.key ==="Enter" || event.type =="click"){
+                    
+                    fetch("/control",{
+                        method:"POST",
+                        headers: {"Content-Type":"application/json"},
+                        body:JSON.stringify({
+                            "word":word.value
+                        })
+                    }
+                    ).then(response=>response.json())
+                    .then(function(data){
+                        if(data.status){
+                            num.textContent = data.num;
+                            status = true;
+    
+                        }else{status = false;}
+                        alert= data.alert;
+                        if (alert == "exist"){
+                            exp.textContent="Congratulations!"
+                            word.style.backgroundColor="#92db92";
+
+                        }else if(alert=="al-exist"){
+                            exp.textContent="You Already Wrote It!"
+                            word.style.backgroundColor="#f1f1bc";
+
+                        }else{
+                            exp.textContent="Invalid Word."
+                            word.style.backgroundColor="#f17c7c";
+
+                        }
+                        word.value = "";
+                            
+                                        
+                    })  
+                    .catch(error => {
+                        console.error("error", error);
+                        });
+
+
+
+
+
+                        
+                    }
+
+        } 
+
+
+        
+
+
+      
+
+    });
+    
+</script>
+
+
 </body>
 </html>
